@@ -18,6 +18,11 @@ config :rocketpay, RocketpayWeb.Endpoint,
   pubsub_server: Rocketpay.PubSub,
   live_view: [signing_salt: "X3XH1BUh"]
 
+# Configures the migrations
+config :rocketpay, Rocketpay.Repo,
+  migration_primaryS_key: [type: :binary_id],
+  migration_foreign_key: [type: :binary_id]
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
