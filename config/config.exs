@@ -20,7 +20,7 @@ config :rocketpay, RocketpayWeb.Endpoint,
 
 # Configures the migrations
 config :rocketpay, Rocketpay.Repo,
-  migration_primaryS_key: [type: :binary_id],
+  migration_primary_key: [type: :binary_id],
   migration_foreign_key: [type: :binary_id]
 
 # Configures Elixir's Logger
