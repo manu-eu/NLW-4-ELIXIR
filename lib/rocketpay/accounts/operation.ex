@@ -2,7 +2,7 @@ defmodule Rocketpay.Accounts.Operation do
 
   alias Ecto.Multi
 
-  alias Rocketpay.{Account, Repo}
+  alias Rocketpay.Account
 
   # Executes an operation using the given value to the account with the given id
   def call(%{"id" => id, "value" => value}, operation) do
