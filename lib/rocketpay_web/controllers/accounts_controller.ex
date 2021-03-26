@@ -19,9 +19,14 @@ defmodule RocketpayWeb.AccountsController do
   end
 
   def transaction(conn, params) do
-    task = Task.async(fn -> Rocketpay.transaction(params) end)
-
-    with {:ok, %TransactionResponse{} = transaction} <- Task.await(task) do
+    # The process of do a transaction can be made by a Task.
+    # This is how it looks like:
+    #
+    # - task = Task.async(fn -> Rocketpay.transaction(params) end)
+    # - with {:ok, %TransactionResponse{} = transaction} <- Task.await(task) do
+    # -   conn |> put_status(:ok) |> render("transaction.json", transaction: transaction)
+    # - end
+    with {:ok, %TransactionResponse{} = transaction} <- Rocketpay.transaction(params) do
       conn |> put_status(:ok) |> render("transaction.json", transaction: transaction)
     end
   end
