@@ -6,9 +6,13 @@ defmodule Rocketpay.Accounts.Operation do
 
   # Executes an operation using the given value to the account with the given id
   def call(%{"id" => id, "value" => value}, operation) do
+    account_identifier = account_operation_name(operation)
+
     Multi.new()
-    |> Multi.run(:account, fn repo, _changes -> get_account(repo, id) end)
-    |> Multi.run(:update_balance, fn repo, %{account: account} ->
+    |> Multi.run(account_identifier, fn repo, _changes -> get_account(repo, id) end)
+    |> Multi.run(operation, fn repo, changes ->
+      account = Map.get(changes, account_identifier)
+
       update_balance(repo, account, value, operation)
     end)
   end
@@ -38,5 +42,7 @@ defmodule Rocketpay.Accounts.Operation do
 
     account |> Account.changeset(params) |> repo.update()
   end
+account_identifier =
 
+  defp account_operation_name(operation), do: "account_#{Atom.to_string(operation)}" |>String.to_atom()
 end
