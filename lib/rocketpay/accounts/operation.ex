@@ -42,7 +42,6 @@ defmodule Rocketpay.Accounts.Operation do
 
     account |> Account.changeset(params) |> repo.update()
   end
-account_identifier =
 
   defp account_operation_name(operation), do: "account_#{Atom.to_string(operation)}" |>String.to_atom()
 end
